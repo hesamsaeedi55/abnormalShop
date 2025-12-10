@@ -18,6 +18,6 @@ services:
           property: connectionString
 
 databases:
-  - name: myshop2-db-new             # New unique database name
+  - name: myshop2dbnew             # New unique database name
     databaseName: myshop2_new        # New database name in Postgres
     user: myshop2_new
