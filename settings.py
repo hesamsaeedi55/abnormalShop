@@ -1,2 +1,5 @@
-# Google OAuth2 settings
-# GOOGLE_CLIENT_ID = '198960327448-p1d5feprlio39dk1rrac0ueju78qu4c4.apps.googleusercontent.com' 
+import os
+from django.core.management.utils import get_random_secret_key
+
+# Use environment variable if set, otherwise generate a random key
+SECRET_KEY = os.environ.get("d3d411f23ba7be8d9700fb20072bac6c", get_random_secret_key())
