@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Category Attributes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+        select { padding: 5px; margin: 10px; }
+        button { padding: 10px 15px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Debug Category Attributes Loading</h1>
+    
+    <div class="debug-section">
+        <h3>Test Category Selection</h3>
+        <label for="categorySelect">Select Category:</label>
+        <select id="categorySelect">
+            <option value="">-- Select Category --</option>
+            <option value="1027">ساعت مردانه</option>
+            <option value="1036">تی شرت</option>
+            <option value="1039">ساعت زنانه</option>
+            <option value="1031">اکسسوری مردانه</option>
+        </select>
+        <button onclick="testLoadAttributes()">Test Load Attributes</button>
+        <button onclick="debugWindowData()">Debug Window Data</button>
+    </div>
+    
+    <div class="debug-section">
+        <h3>Debug Output</h3>
+        <div id="debugOutput"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h3>Category Attributes Data</h3>
+        <div id="categoryAttributesData"></div>
+    </div>
+
+    <script>
+        // Simulate the category attributes data structure from the backend
+        window.categoryAttributes = {
+            "1027": [
+                {
+                    "key": "brand",
+                    "required": true,
+                    "type": "select",
+                    "value": "",
+                    "source": "legacy",
+                    "values": ["رولکس", "امگا", "کارتیه", "لونژین", "همیلتون", "اُریس", "تودور", "تگ هویر", "فردریک کنستانت", "سیکو", "پتک فیلیپ", "وشرون کنستانتین", "سرتینا", "تیسو", "اورینت", "سواچ"]
+                },
+                {
+                    "key": "body_material",
+                    "required": true,
+                    "type": "select",
+                    "value": "",
+                    "source": "legacy",
+                    "values": ["استیل", "سرامیک", "تیتانیوم", "طلای 18 عیار"]
+                },
+                {
+                    "key": "strap_material",
+                    "required": false,
+                    "type": "select",
+                    "value": "",
+                    "source": "legacy",
+                    "values": ["بریسلت", "جوبیلی", "رابر", "نیتو", "چرم طبیعی", "چرم مصنوعی"]
+                }
+            ],
+            "1036": [
+                {
+                    "key": "size",
+                    "required": true,
+                    "type": "select",
+                    "value": "",
+                    "source": "legacy",
+                    "values": ["S", "M", "L", "XL", "XXL", "XXXL", "XS"]
+                },
+                {
+                    "key": "material",
+                    "required": true,
+                    "type": "select",
+                    "value": "",
+                    "source": "legacy",
+                    "values": ["تری‌بلند", "تری‌بلند و پلی‌استر", "تری‌بلند و پنبه", "پلی‌استر 100%", "پلی‌استر و الاستین", "پلی‌استر و ریون", "پلی‌استر و نایلون", "پلی‌استر و ویسکوز", "پنبه 100%", "پنبه 50% و پلی‌استر 50%", "پنبه 60% و پلی‌استر 40%", "پنبه 70% و پلی‌استر 30%", "پنبه 80% و پلی‌استر 20%", "پنبه 95% و الاستین 5%", "پنبه ارگانیک", "پنبه با پوشش ضد UV", "پنبه با پوشش ضد باکتری", "پنبه با پوشش ضد عرق", "پنبه با پوشش ضد لکه", "پنبه با پوشش ضد چروک", "پنبه خشک‌کن سریع", "پنبه رینگ اسپان", "پنبه شانه‌خورده", "پنبه ضد بو", "پنبه ضد حساسیت", "پنبه مرسریزه", "پنبه و ویسکوز", "پنبه و پلی‌استر", "پنبه کامب"]
+                },
+                {
+                    "key": "color",
+                    "required": false,
+                    "type": "select",
+                    "value": "",
+                    "source": "legacy",
+                    "values": ["مشکی", "سفید", "خاکستری"]
+                }
+            ]
+        };
+
+        function debugWindowData() {
+            const output = document.getElementById('debugOutput');
+            output.innerHTML = `
+                <div class="info"><strong>Window Category Attributes:</strong></div>
+                <pre>${JSON.stringify(window.categoryAttributes, null, 2)}</pre>
+                <div class="info"><strong>Available Category IDs:</strong> ${Object.keys(window.categoryAttributes).join(', ')}</div>
+            `;
+        }
+
+        function testLoadAttributes() {
+            const categoryId = document.getElementById('categorySelect').value;
+            const output = document.getElementById('debugOutput');
+            
+            if (!categoryId) {
+                output.innerHTML = '<div class="error">Please select a category first!</div>';
+                return;
+            }
+            
+            output.innerHTML = `<div class="info">Testing loadCategoryAttributes for category ID: ${categoryId}</div>`;
+            
+            // Simulate the loadCategoryAttributes function logic
+            try {
+                console.log('🚀 loadCategoryAttributes function called with categoryId:', categoryId);
+                
+                // ERROR CHECKING
+                if (!categoryId) {
+                    console.error('❌ ERROR: categoryId is null/undefined!');
+                    output.innerHTML += '<div class="error">❌ ERROR: categoryId is null/undefined!</div>';
+                    return;
+                }
+                
+                if (!window.categoryAttributes) {
+                    console.error('❌ ERROR: window.categoryAttributes is not loaded!');
+                    output.innerHTML += '<div class="error">❌ ERROR: window.categoryAttributes is not loaded!</div>';
+                    return;
+                }
+                
+                if (typeof window.categoryAttributes !== 'object') {
+                    console.error('❌ ERROR: window.categoryAttributes is not an object!', typeof window.categoryAttributes);
+                    output.innerHTML += '<div class="error">❌ ERROR: window.categoryAttributes is not an object!</div>';
+                    return;
+                }
+                
+                console.log('🔍 Available category IDs:', Object.keys(window.categoryAttributes));
+                
+                // Get category attributes from existing data
+                let categoryAttributesData = window.categoryAttributes[categoryId] || window.categoryAttributes[parseInt(categoryId)];
+                
+                // If still not found, try to find by matching the key
+                if (!categoryAttributesData) {
+                    console.error('❌ ERROR: No category attributes found for categoryId:', categoryId);
+                    const availableKeys = Object.keys(window.categoryAttributes);
+                    console.error('❌ Available keys:', availableKeys);
+                    const matchingKey = availableKeys.find(key => key == categoryId || key == parseInt(categoryId));
+                    if (matchingKey) {
+                        categoryAttributesData = window.categoryAttributes[matchingKey];
+                        console.log('🔧 Found matching key:', matchingKey);
+                    } else {
+                        console.error('❌ ERROR: No matching key found for categoryId:', categoryId);
+                        output.innerHTML += '<div class="error">❌ ERROR: No matching key found for categoryId: ' + categoryId + '</div>';
+                        return;
+                    }
+                }
+                
+                categoryAttributesData = categoryAttributesData || [];
+                console.log('🔧 Category attributes data:', categoryAttributesData);
+                
+                // Display the results
+                const attributesHtml = categoryAttributesData.map(attr => `
+                    <div style="margin: 10px 0; padding: 10px; border: 1px solid #ddd;">
+                        <strong>${attr.key}</strong> (${attr.type}) - Required: ${attr.required}<br>
+                        Values: ${attr.values.join(', ')}
+                    </div>
+                `).join('');
+                
+                output.innerHTML += `
+                    <div class="success">✅ Found ${categoryAttributesData.length} attributes for category ${categoryId}</div>
+                    <div id="categoryAttributesData">${attributesHtml}</div>
+                `;
+                
+            } catch (error) {
+                console.error('❌ Error in testLoadAttributes:', error);
+                output.innerHTML += '<div class="error">❌ Error: ' + error.message + '</div>';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            debugWindowData();
+        });
+    </script>
+</body>
+</html>

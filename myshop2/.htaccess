@@ -1,0 +1,17 @@
+RewriteEngine On
+RewriteBase /
+
+# Don't rewrite files or directories
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite everything else to index.php
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Set PHP handler
+AddHandler application/x-httpd-php .php
+
+# Enable PHP execution
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php
+</FilesMatch> 

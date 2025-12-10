@@ -1,0 +1,1 @@
+# Remove the api_categories function (lines 2-17) 

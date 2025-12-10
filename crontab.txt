@@ -1,0 +1,2 @@
+# Run PostgreSQL backup daily at 2 AM
+0 2 * * * /path/to/backup_postgres.sh 
